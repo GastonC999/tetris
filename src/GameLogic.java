@@ -1,25 +1,25 @@
 import java.awt.*;
 
-public class LogicaJuego {
-    private final int filas;
-    private final int columnas;
+public class GameLogic {
+    private final int rows;
+    private final int columns;
     private final Color[][] matriz;
-    private int puntaje;
+    private int score;
 
-    public LogicaJuego(int filas, int columnas) {
-        this.filas = filas;
-        this.columnas = columnas;
-        this.matriz = new Color[filas][columnas];
-        this.puntaje = 0;
+    public GameLogic(int rows, int columns) {
+        this.rows = rows;
+        this.columns = columns;
+        this.matriz = new Color[rows][columns];
+        this.score = 0;
     }
 
-    public boolean hayColision(int x, int y, int[][] forma) {
+    public boolean collisionDetected(int x, int y, int[][] forma) {
         for (int f = 0; f < forma.length; f++) {
             for (int c = 0; c < forma[f].length; c++) {
                 if (forma[f][c] != 0) {
                     int px = x + c;
                     int py = y + f;
-                    if (px < 0 || px >= columnas || py >= filas) return true;
+                    if (px < 0 || px >= columns || py >= rows) return true;
                     if (py >= 0 && matriz[py][px] != null) return true;
                 }
             }
@@ -27,14 +27,14 @@ public class LogicaJuego {
         return false;
     }
 
-    public void fijarPieza(Pieza p) {
-        int[][] forma = p.getForma();
+    public void securePart(Piece p) {
+        int[][] forma = p.getShape();
         for (int f = 0; f < forma.length; f++) {
             for (int c = 0; c < forma[f].length; c++) {
                 if (forma[f][c] != 0) {
                     int py = p.getY() + f;
                     int px = p.getX() + c;
-                    if (py >= 0 && py < filas && px >= 0 && px < columnas) {
+                    if (py >= 0 && py < rows && px >= 0 && px < columns) {
                         matriz[py][px] = p.getColor();
                     }
                 }
@@ -44,9 +44,9 @@ public class LogicaJuego {
     }
 
     private void limpiarLineas() {
-        for (int f = filas - 1; f >= 0; f--) {
+        for (int f = rows - 1; f >= 0; f--) {
             boolean llena = true;
-            for (int c = 0; c < columnas; c++) {
+            for (int c = 0; c < columns; c++) {
                 if (matriz[f][c] == null) {
                     llena = false;
                     break;
@@ -54,7 +54,7 @@ public class LogicaJuego {
             }
             if (llena) {
                 eliminarFila(f);
-                puntaje += 100;
+                score += 100;
                 f++; // Re-chequear la misma fila
             }
         }
@@ -62,16 +62,16 @@ public class LogicaJuego {
 
     private void eliminarFila(int fila) {
         for (int f = fila; f > 0; f--) {
-            System.arraycopy(matriz[f - 1], 0, matriz[f], 0, columnas);
+            System.arraycopy(matriz[f - 1], 0, matriz[f], 0, columns);
         }
-        matriz[0] = new Color[columnas];
+        matriz[0] = new Color[columns];
     }
 
     public Color[][] getMatriz() {
         return matriz;
     }
 
-    public int getPuntaje() {
-        return puntaje;
+    public int getScore() {
+        return score;
     }
 }

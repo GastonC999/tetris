@@ -28,14 +28,14 @@ Un juego clásico de **Tetris** desarrollado en Java utilizando la librería gr�
 
 El código está refactorizado aplicando principios de **Clean Code** y **Separación de Responsabilidades**:
 
-* **`Pieza.java`:** Modela la entidad del tetramino. Contiene su forma (matriz), color, posición y los métodos para manipular su estado (movimiento y rotación).
-* **`LogicaJuego.java`:** El "cerebro" del juego. Gestiona el estado de la matriz del tablero (`Color[][]`), procesa la validación de colisiones, la eliminación de líneas completas y el cálculo del puntaje. Es independiente de la interfaz gráfica.
-* **`PiezaFactory.java`:** Implementa el patrón *Factory* para centralizar la creación de piezas. Define las formas y colores oficiales y entrega nuevas instancias aleatorias.
-* **`Tablero.java`:** Actúa como la **Vista** y el **Controlador**.
+* **`Piece.java`:** Modela la entidad del tetramino. Contiene su forma (matriz), color, posición y los métodos para manipular su estado (movimiento y rotación).
+* **`GameLogic.java`:** El "cerebro" del juego. Gestiona el estado de la matriz del tablero (`Color[][]`), procesa la validación de colisiones, la eliminación de líneas completas y el cálculo del puntaje. Es independiente de la interfaz gráfica.
+* **`PieceFactory.java`:** Implementa el patrón *Factory* para centralizar la creación de piezas. Define las formas y colores oficiales y entrega nuevas instancias aleatorias.
+* **`Board.java`:** Actúa como la **Vista** y el **Controlador**.
     * Hereda de `JPanel` para el renderizado gráfico.
     * Orquestra el flujo del juego mediante un `javax.swing.Timer`.
     * Captura y delega las entradas de teclado a la lógica correspondiente.
-    * Dibuja el estado actual procesando la información provista por `LogicaJuego`.
+    * Dibuja el estado actual procesando la información provista por `GameLogic`.
 * **`Main.java`:** Punto de entrada de la aplicación que configura la ventana principal (`JFrame`).
 
 ---
