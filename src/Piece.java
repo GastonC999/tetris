@@ -31,6 +31,23 @@ public class Piece {
         }
     }
 
+    public void drawAt(Graphics g, int cellSize, int originX, int originY) {
+        g.setColor(color);
+        for (int i = 0; i < shape.length; i++) {
+            for (int j = 0; j < shape[i].length; j++) {
+                if (shape[i][j] == 1) {
+                    int posX = originX + j * cellSize;
+                    int posY = originY + i * cellSize;
+
+                    g.fillRect(posX, posY, cellSize, cellSize);
+                    g.setColor(Color.WHITE);
+                    g.drawRect(posX, posY, cellSize, cellSize);
+                    g.setColor(color);
+                }
+            }
+        }
+    }
+
     // Métodos simples de movimiento
     public void moveDown() {
         y++;

@@ -13,13 +13,16 @@ public class Board extends JPanel {
     private static final int CELL_SIZE = 30;
 
     private Piece currentPiece;
+    private Piece nextPiece;
     private Timer gameTimer;
     private final GameLogic gameLogic;
+    private NextPiecePanel nextPiecePanel;
 
     public Board() {
         gameLogic = new GameLogic(ROWS, COLUMNS);
         setupPanel();
         setupControls();
+        nextPiece = PieceFactory.createRandomPiece();
         generateNewPiece();
         startGameLoop();
     }
@@ -40,11 +43,26 @@ public class Board extends JPanel {
     }
 
     private void generateNewPiece() {
-        currentPiece = PieceFactory.createRandomPiece();
+        currentPiece = nextPiece;
+        nextPiece = PieceFactory.createRandomPiece();
+        if (nextPiecePanel != null) {
+            nextPiecePanel.setNextPiece(nextPiece);
+        }
         //Si al generar una pieza ya hay colisión, el juego termina
         if (gameLogic.collisionDetected(currentPiece.getX(), currentPiece.getY(), currentPiece.getShape())) {
             if (gameTimer != null) gameTimer.stop();
             JOptionPane.showMessageDialog(this, "Game Over! Final Score: " + gameLogic.getScore());
+        }
+    }
+
+    public Piece getNextPiece() {
+        return nextPiece;
+    }
+
+    public void setNextPiecePanel(NextPiecePanel nextPiecePanel) {
+        this.nextPiecePanel = nextPiecePanel;
+        if (nextPiecePanel != null) {
+            nextPiecePanel.setNextPiece(nextPiece);
         }
     }
 
