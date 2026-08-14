@@ -12,6 +12,7 @@ Un juego clásico de **Tetris** desarrollado en Java utilizando la librería gr�
 * **Game Loop & Gravedad:** Implementación de un temporizador en segundo plano (`javax.swing.Timer`) para controlar la caída continua.
 * **Limpieza de Líneas & Puntaje:** Identificación de filas completas, desplazamiento de bloques superiores y otorgamiento de puntos según líneas destruidas.
 * **Game Over:** Detección automática de saturación en la matriz superior e interrupción de la partida.
+* **Vista Previa de la Siguiente Pieza:** Panel lateral que muestra la próxima pieza que caerá, permitiendo planificar los movimientos con anticipación.
 
 ---
 
@@ -28,7 +29,7 @@ Un juego clásico de **Tetris** desarrollado en Java utilizando la librería gr�
 
 El código está refactorizado aplicando principios de **Clean Code** y **Separación de Responsabilidades**:
 
-* **`Piece.java`:** Modela la entidad del tetramino. Contiene su forma (matriz), color, posición y los métodos para manipular su estado (movimiento y rotación).
+* **`Piece.java`:** Modela la entidad del tetramino. Contiene su forma (matriz), color, posición y los métodos para manipular su estado (movimiento y rotación). Incluye `drawAt()` para dibujar la forma en coordenadas libres (usado por la vista previa).
 * **`GameLogic.java`:** El "cerebro" del juego. Gestiona el estado de la matriz del tablero (`Color[][]`), procesa la validación de colisiones, la eliminación de líneas completas y el cálculo del puntaje. Es independiente de la interfaz gráfica.
 * **`PieceFactory.java`:** Implementa el patrón *Factory* para centralizar la creación de piezas. Define las formas y colores oficiales y entrega nuevas instancias aleatorias.
 * **`Board.java`:** Actúa como la **Vista** y el **Controlador**.
@@ -36,7 +37,9 @@ El código está refactorizado aplicando principios de **Clean Code** y **Separa
     * Orquestra el flujo del juego mediante un `javax.swing.Timer`.
     * Captura y delega las entradas de teclado a la lógica correspondiente.
     * Dibuja el estado actual procesando la información provista por `GameLogic`.
-* **`Main.java`:** Punto de entrada de la aplicación que configura la ventana principal (`JFrame`).
+    * Reserva de antemano la siguiente pieza (`nextPiece`) y la notifica al panel de vista previa.
+* **`NextPiecePanel.java`:** Panel lateral que muestra una vista previa de la próxima pieza a caer. Dibuja la forma centrada mediante `Piece.drawAt()` y una rejilla de referencia.
+* **`Main.java`:** Punto de entrada de la aplicación que configura la ventana principal (`JFrame`) con un `BorderLayout`: el tablero al centro y el panel de vista previa al este.
 
 ---
 
@@ -55,4 +58,4 @@ El código está refactorizado aplicando principios de **Clean Code** y **Separa
 
 1. Cloná este repositorio:
    ```bash
-   git clone [https://github.com/TU_USUARIO/TU_REPOSITTORIO.git](https://github.com/TU_USUARIO/TU_REPOSITTORIO.git)
+   git clone https://github.com/GastonC999/tetris.git
